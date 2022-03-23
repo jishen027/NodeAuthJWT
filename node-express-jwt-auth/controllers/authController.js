@@ -1,15 +1,16 @@
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
+const res = require('express/lib/response')
 
 //handle errors
 const handleErrors = (err) => {
   let errors = { email: '', password: '' }
 
-  if(err.message === 'incorrect email'){
+  if (err.message === 'incorrect email') {
     errors.email = 'that eamil is not registered'
   }
 
-  if(err.message === 'incorrect password'){
+  if (err.message === 'incorrect password') {
     errors.password = 'incorrect password'
   }
 
@@ -74,8 +75,13 @@ const login_post = async (req, res) => {
   } catch (error) {
     const errors = handleErrors(error)
     console.log(errors)
-    res.status(400).json({errors})
+    res.status(400).json({ errors })
   }
 }
 
-module.exports = { signup_get, signup_post, login_get, login_post }
+const logout_get = (req, res) => {
+  res.cookie('jwt', '', {maxAge: 1})
+  res.redirect('/')
+}
+
+module.exports = { signup_get, signup_post, login_get, login_post, logout_get }
