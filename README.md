@@ -1,2 +1,2 @@
 # NodeAuthJWT
-node.js with JWT
+node authentication with JWT
